@@ -3,13 +3,14 @@ import os
 from titanic.models.titanic_service import TitanicService
 
 
-class TitanicServiceTest(object):
+class TitanicServiceTest(unittest.TestCase):
 
     mock = TitanicService()
 
     def test_new_model(self) :
         # self.mock.new_model('train.csv')
-        print(os.getcwd())
+        # print(os.getcwd())
+        print(self.mock.new_model())
 
     def count_survived_dead(self, ):
         return []
