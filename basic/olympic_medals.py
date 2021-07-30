@@ -1,8 +1,7 @@
 import pandas
 import pandas as pd
 
-
-class Olympic(object):
+class OlympicMedals(object):
     pass
 
     def read_wiki(self) -> object:
@@ -10,6 +9,3 @@ class Olympic(object):
         print(df)
         return df
 
-if __name__ == '__main__':
-    obj = Olympic()
-    obj.read_wiki()

@@ -1,5 +1,5 @@
 from titanic.models.dataset import Dataset
-from titanic.models.service import Service
+from titanic.models.titanic_service import Service
 
 
 class View(object):

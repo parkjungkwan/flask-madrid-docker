@@ -1,11 +1,18 @@
 import matplotlib.pyplot as plt
+import unittest
 import os
-class BasicPlot(object):
+
+from modu.template.basic_plot import BasicPlot
+
+
+class BasicPlotTest(object):
+
+    instance = BasicPlot()
 
     """
     list 값은 y축이고, x축은 0부터 1까지 자동으로 증가한다.
     """
-    def plot_show(self):
+    def test_plot_show(self):
         plt.title("plotting")
         plt.plot([10, 20, 30, 40])
         plt.show()
@@ -17,15 +24,14 @@ class BasicPlot(object):
         plt.show()
 
     def plot_marker(self):
-        plt.plot(range(100))
-        plt.draw()
-        fig = plt.gcf()
-        fig.savefig('myfile.png', dpi=fig.dpi)
+        pass
 
     def scatter(self):
         pass
 
-    def show_path(self):
-        print(f'currentPath: {os.getcwd()}')
+    def test_show_path(self):
+        self.instance.show_path()
 
 
+if __name__ == '__main__':
+    unittest.main()
