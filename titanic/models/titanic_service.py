@@ -18,8 +18,12 @@ class TitanicService(object):
     def create_label(this) -> object:
         return this.train['Survived']
 
-    def drop_feature(self, *feature):
-        return None
+    @staticmethod
+    def drop_feature(this, *feature) -> object:
+        for i in feature:
+            this.train = this.train.drop([i], axis=1)
+            this.test = this.test.drop([i], axis=1)
+        return this
 
     def embarked_nominal(self):
         return None
