@@ -6,11 +6,11 @@ class TitanicService(object):
 
     dataset = Dataset()
 
-    def new_model(self) -> object:
-        # this = self.dataset
-        # this.context = '/app/'
-        # this.fname = payload
-        return pd.read_csv("/data/train.csv")
+    def new_model(self, payload) -> object:
+        return pd.read_csv(f"/data/{payload}.csv")
+
+    def create_train(self):
+        return None
 
     def count_survived_dead(self, ):
         return []

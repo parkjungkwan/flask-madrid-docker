@@ -8,9 +8,8 @@ class TitanicServiceTest(unittest.TestCase):
     mock = TitanicService()
 
     def test_new_model(self) :
-        # self.mock.new_model('train.csv')
-        # print(os.getcwd())
-        print(self.mock.new_model())
+        # print(self.mock.new_model("train"))
+        print(self.mock.new_model("test"))
 
     def count_survived_dead(self, ):
         return []
