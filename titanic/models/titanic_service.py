@@ -1,5 +1,7 @@
 from titanic.models.dataset import Dataset
 import pandas as pd
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.ensemble import RandomForestClassifier
 
 
 class TitanicService(object):
@@ -9,17 +11,12 @@ class TitanicService(object):
     def new_model(self, payload) -> object:
         return pd.read_csv(f"/data/{payload}.csv")
 
-    def create_train(self):
-        return None
-
-    def count_survived_dead(self, ):
-        return []
-
-    def create_train(self):
-        return None
-
-    def create_label(self):
-        return None
+    @staticmethod
+    def create_train(this) -> object:
+        return this.train.drop('Survived', axis=1)
+    @staticmethod
+    def create_label(this) -> object:
+        return this.train['Survived']
 
     def drop_feature(self, *feature):
         return None
