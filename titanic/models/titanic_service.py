@@ -38,7 +38,7 @@ class TitanicService(object):
         return this
 
     @staticmethod
-    def fare_oridnal(this) -> object:
+    def fare_ordinal(this) -> object:
         this.train['Fare'] = this.train['Fare'].fillna(1)
         this.test['Fare'] = this.test['Fare'].fillna(1)
         this.train['FareBand'] = pd.qcut(this.train['Fare'], 4, labels={1, 2, 3, 4})
@@ -64,7 +64,7 @@ class TitanicService(object):
         return this
 
     @staticmethod
-    def gender_norminal(this) -> object:
+    def gender_nominal(this) -> object:
         combine = [this.train, this.test]
         sex_mapping = {'male':0, 'female':1}
         for dataset in combine:
@@ -86,11 +86,19 @@ class TitanicService(object):
             i['AgeGroup'] = i['AgeGroup'].map(age_mapping)
         return this
 
-    def create_k_fold(self) -> object:
-        return None
+    @staticmethod
+    def create_k_fold() -> object:
+        return KFold(n_splits=10, shuffle=True, random_state=0)
 
-    def accuracy_by_classfier(self):
-        return None
+
+    def accuracy_by_classfier(self, this):
+        score = cross_val_score(RandomForestClassifier(),
+                                this.train,
+                                this.label,
+                                cv=self.create_k_fold(),
+                                n_jobs=1,
+                                scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
 
 
 
