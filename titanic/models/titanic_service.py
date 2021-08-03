@@ -4,6 +4,10 @@ from sklearn.model_selection import KFold, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
 
+"""
+['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+   'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+"""
 class TitanicService(object):
 
     dataset = Dataset()
@@ -46,24 +50,18 @@ class TitanicService(object):
     @staticmethod
     def title_nominal(this) -> object:
         combine = [this.train, this.test]
+        title_mapping = {'Mr': 1, 'Miss': 2, 'Mrs': 3, 'Master': 4, 'Royal': 5, 'Rare': 6}
         for dataset in combine:
             dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
         for dataset in combine:
-            dataset["Title"] = dataset['Title'].replace(['Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Jonkheer','Dona', 'Mme'], 'Rare')
-            dataset["Title"] = dataset['Title'].replace(['Countess', 'Lady', 'Sir'], 'Royal')
-            dataset["Title"] = dataset['Title'].replace('Mile', 'Mr')
-            dataset["Title"] = dataset['Title'].replace('Ms', 'Miss')
-        title_mapping = {'Mr':1 , 'Miss':2, 'Mrs':3, 'Master':4, 'Royal':5, 'Rare':6}
-        for dataset in combine:
-            dataset['Title'] = dataset['Title'].map(title_mapping)
+            dataset['Title'] = dataset['Title'].replace(
+                ['Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Jonkheer', 'Dona', 'Mme'], 'Rare')
+            dataset['Title'] = dataset['Title'].replace(['Countess', 'Lady', 'Sir'], 'Royal')
+            dataset['Title'] = dataset['Title'].replace('Mlle', 'Mr')
+            dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
             dataset['Title'] = dataset['Title'].fillna(0)
-        this.train = this.train
-        this.test = this.test
+            dataset['Title'] = dataset['Title'].map(title_mapping)
         return this
-    """
-    ['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
-       'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
-    """
 
     @staticmethod
     def gender_norminal(this) -> object:
@@ -71,8 +69,6 @@ class TitanicService(object):
         sex_mapping = {'male':0, 'female':1}
         for dataset in combine:
             dataset['Gender'] = dataset['Sex'].map(sex_mapping)
-        this.train = this.train
-        this.test = this.test
         return this
 
     @staticmethod
@@ -83,22 +79,11 @@ class TitanicService(object):
         test['Age'] = test['Age'].fillna(-0.5)
         bins = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
         labels = ['Unknown','Baby','Child','Teenager','Student','Young Adult','Adult', 'Senior']
-        train['AgeGroup'] = pd.cut(train['Age'], bins, labels=labels)
-        test['AgeGroup'] = pd.cut(test['Age'], bins, labels=labels)
-        age_title_mapping = {0: 'Unknown', 1: 'Baby', 2: 'Child', 3: 'Teenager', 4: 'Student', 5: 'Young Adult',
-                             6: 'Adult', 7: 'Senior'}
-        for i in range(len(train['AgeGroup'])):
-            if train['AgeGroup'][i] == 'Unknown':
-                train['AgeGroup'][i] = age_title_mapping[train['Title'][i]]
-        for i in range(len(test['AgeGroup'])):
-            if test['AgeGroup'][i] == 'Unknown':
-                test['AgeGroup'][i] = age_title_mapping[test['Title'][i]]
         age_mapping = {'Unknown': 0, 'Baby': 1, 'Child': 2, 'Teenager': 3, 'Student': 4, 'Young Adult': 5, 'Adult': 6,
                        'Senior': 7}
-        train['AgeGroup'] = train['AgeGroup'].map(age_mapping)
-        test['AgeGroup'] = test['AgeGroup'].map(age_mapping)
-        this.train = this.train
-        this.test = this.test
+        for i in train, test:
+            i['AgeGroup'] = pd.cut(i['Age'], bins=bins, labels=labels)
+            i['AgeGroup'] = i['AgeGroup'].map(age_mapping)
         return this
 
     def create_k_fold(self) -> object:
