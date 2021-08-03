@@ -2,7 +2,7 @@ from titanic.models.dataset import Dataset
 import pandas as pd
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.ensemble import RandomForestClassifier
-
+import numpy as np
 
 class TitanicService(object):
 
@@ -25,22 +25,52 @@ class TitanicService(object):
             this.test = this.test.drop([i], axis=1)
         return this
 
-    def embarked_nominal(self):
+    @staticmethod
+    def embarked_nominal(this) -> object:
+        this.train = this.train.fillna({'Embarked':'S'})
+        this.test = this.test.fillna({'Embarked': 'S'})
+        this.train['Embarked'] = this.train['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
+        this.test['Embarked'] = this.test['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
+        return this
+
+    @staticmethod
+    def fare_oridnal(this) -> object:
+        this.train['Fare'] = this.train['Fare'].fillna(1)
+        this.test['Fare'] = this.test['Fare'].fillna(1)
+        this.train['FareBand'] = pd.qcut(this.train['Fare'], 4)
+        this.test['FareBand'] = pd.qcut(this.test['Fare'], 4)
+        # qcut() 을 사용하면 자동으로 구간을 4등분한다.
+        # 타이타닉에서는 bins = [-1, 8, 15, 31, np.inf] 로 구분된다.
+        return this
+
+    @staticmethod
+    def title_nominal(this) -> object:
+        combine = [this.train, this.test]
+        for dataset in combine:
+            dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
+        for dataset in combine:
+            dataset["Title"] = dataset['Title'].replace(['Mme'], 'Rare')
+            dataset["Title"] = dataset['Title'].replace([''], 'Rare')
+            dataset["Title"] = dataset['Title'].replace('Mile', 'Mr')
+            dataset["Title"] = dataset['Title'].replace('Ms', 'Miss')
+
+
+
+        return None
+    """
+    ['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
+       'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+    """
+
+    @staticmethod
+    def gender_norminal(this) -> object:
         return None
 
-    def fare_oridnal(self):
+    @staticmethod
+    def age_ordinal(this) -> object:
         return None
 
-    def title_nominal(self):
-        return None
-
-    def gender_norminal(self):
-        return None
-
-    def age_ordinal(self):
-        return None
-
-    def create_k_fold(self):
+    def create_k_fold(self) -> object:
         return None
 
     def accuracy_by_classfier(self):
