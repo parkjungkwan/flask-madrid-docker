@@ -67,14 +67,39 @@ class TitanicService(object):
 
     @staticmethod
     def gender_norminal(this) -> object:
-        
+        combine = [this.train, this.test]
         sex_mapping = {'male':0, 'female':1}
-
-        return None
+        for dataset in combine:
+            dataset['Sex'] = dataset['Sex'].map(sex_mapping)
+        this.train = this.train
+        this.test = this.test
+        return this
 
     @staticmethod
     def age_ordinal(this) -> object:
-        return None
+        train = this.train
+        test = this.test
+        train['Age'] = train['Age'].fillna(-0.5)
+        test['Age'] = test['Age'].fillna(-0.5)
+        bins = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
+        labels = ['Unknown','Baby','Child','Teenager','Student','Young Adult','Adult', 'Senior']
+        train['AgeGroup'] = pd.cut(train['Age'], bins, labels=labels)
+        test['AgeGroup'] = pd.cut(test['Age'], bins, labels=labels)
+        age_title_mapping = {0: 'Unknown', 1: 'Baby', 2: 'Child', 3: 'Teenager', 4: 'Student', 5: 'Young Adult',
+                             6: 'Adult', 7: 'Senior'}
+        for i in range(len(train['AgeGroup'])):
+            if train['AgeGroup'][i] == 'Unknown':
+                train['AgeGroup'][i] = age_title_mapping[train['Title'][i]]
+        for i in range(len(test['AgeGroup'])):
+            if test['AgeGroup'][i] == 'Unknown':
+                test['AgeGroup'][i] = age_title_mapping[test['Title'][i]]
+        age_mapping = {'Unknown': 0, 'Baby': 1, 'Child': 2, 'Teenager': 3, 'Student': 4, 'Young Adult': 5, 'Adult': 6,
+                       'Senior': 7}
+        train['AgeGroup'] = train['AgeGroup'].map(age_mapping)
+        test['AgeGroup'] = test['AgeGroup'].map(age_mapping)
+        this.train = this.train
+        this.test = this.test
+        return this
 
     def create_k_fold(self) -> object:
         return None
