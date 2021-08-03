@@ -37,8 +37,8 @@ class TitanicService(object):
     def fare_oridnal(this) -> object:
         this.train['Fare'] = this.train['Fare'].fillna(1)
         this.test['Fare'] = this.test['Fare'].fillna(1)
-        this.train['FareBand'] = pd.qcut(this.train['Fare'], 4)
-        this.test['FareBand'] = pd.qcut(this.test['Fare'], 4)
+        this.train['FareBand'] = pd.qcut(this.train['Fare'], 4, labels={1, 2, 3, 4})
+        this.test['FareBand'] = pd.qcut(this.test['Fare'], 4, labels={1, 2, 3, 4})
         # qcut() 을 사용하면 자동으로 구간을 4등분한다.
         # 타이타닉에서는 bins = [-1, 8, 15, 31, np.inf] 로 구분된다.
         return this
@@ -70,7 +70,7 @@ class TitanicService(object):
         combine = [this.train, this.test]
         sex_mapping = {'male':0, 'female':1}
         for dataset in combine:
-            dataset['Sex'] = dataset['Sex'].map(sex_mapping)
+            dataset['Gender'] = dataset['Sex'].map(sex_mapping)
         this.train = this.train
         this.test = this.test
         return this

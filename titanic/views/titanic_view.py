@@ -15,6 +15,12 @@ class TitanicView(object):
         this = self.dataset
         this.train = service.new_model("train")
         this.test = service.new_model("test")
+        this.id = this.test['PassengerId']
+        this = service.embarked_nominal(this)
+        this = service.title_nominal(this)
+        this = service.age_ordinal(this)
+        this = service.gender_norminal(this)
+        this = service.drop_feature(this, 'Name', 'Cabin', 'Sex', 'Age', 'Fare')
         self.print_this(this)
         return this
 
