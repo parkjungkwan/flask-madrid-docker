@@ -49,14 +49,17 @@ class TitanicService(object):
         for dataset in combine:
             dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
         for dataset in combine:
-            dataset["Title"] = dataset['Title'].replace(['Mme'], 'Rare')
-            dataset["Title"] = dataset['Title'].replace([''], 'Rare')
+            dataset["Title"] = dataset['Title'].replace(['Capt', 'Col', 'Don', 'Dr', 'Major', 'Rev', 'Jonkheer','Dona', 'Mme'], 'Rare')
+            dataset["Title"] = dataset['Title'].replace(['Countess', 'Lady', 'Sir'], 'Royal')
             dataset["Title"] = dataset['Title'].replace('Mile', 'Mr')
             dataset["Title"] = dataset['Title'].replace('Ms', 'Miss')
-
-
-
-        return None
+        title_mapping = {'Mr':1 , 'Miss':2, 'Mrs':3, 'Master':4, 'Royal':5, 'Rare':6}
+        for dataset in combine:
+            dataset['Title'] = dataset['Title'].map(title_mapping)
+            dataset['Title'] = dataset['Title'].fillna(0)
+        this.train = this.train
+        this.test = this.test
+        return this
     """
     ['PassengerId', 'Survived', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp',
        'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
@@ -64,6 +67,9 @@ class TitanicService(object):
 
     @staticmethod
     def gender_norminal(this) -> object:
+        
+        sex_mapping = {'male':0, 'female':1}
+
         return None
 
     @staticmethod
