@@ -38,7 +38,7 @@ class TitanicView(object):
         clf = RandomForestClassifier()
         clf.fit(this.train, this.test)
         prediction = clf.predict(this.test)
-        pd.DataFrame({'PassengerId' : this.id, 'Survived' : prediction}).to_csv('../../data/submission.csv', index=False)
+        pd.DataFrame({'PassengerId' : this.id, 'Survived' : prediction}).to_csv('../data/submission.csv', index=False)
 
 
     @staticmethod

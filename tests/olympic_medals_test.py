@@ -1,6 +1,6 @@
 import unittest
 
-from basic.olympic_medals import OlympicMedals
+from essential_packages.olympic_medals import OlympicMedals
 
 
 class OlympicMedalsTest(unittest.TestCase):

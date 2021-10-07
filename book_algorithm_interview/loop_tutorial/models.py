@@ -10,7 +10,7 @@ class OneToTenSum(object):
             sum += i
         return sum
 
-    # 예시 2
+    # 예시 2 One-Liner
     def one_to_ten_sum_2(self):
         val = sum(i for i in range(1,11))
         return val

@@ -4,7 +4,34 @@ import pandas as pd
 import numpy as np
 from matplotlib import font_manager, rc
 rc('font', family = font_manager.FontProperties(fname='C:/Windows/Fonts/H2GTRE.ttf').get_name())
+
 class Population(object):
+
+    data: [] = list()
+
+    def read_data(self):
+        data = csv.reader(open('../titanic/data/202106_202106_연령별인구현황_월간.csv', 'rt', encoding='UTF-8'))
+        next(data)
+        # print([i for i in data])
+        self.data = data
+
+    def pop_per_dong(self, dong: str) -> []:
+        # [주의 ]csv reader 는 1회 이상 사용하면 GC 가 제거한다
+        # print([i for i in self.data])
+        arr = []
+        [arr.append(int(j)) for i in self.data if dong in i[0] for j in i[3:]]
+        print('*'*100)
+        print([i for i in arr])
+        return arr
+
+    def show_plot(self, arr: []):
+        plt.style.use('ggplot')
+        plt.plot(arr)
+        plt.show()
+
+
+
+class Population2(object):
 
     data: [] = list()
     home: [] = list()
@@ -12,9 +39,9 @@ class Population(object):
     result_name: str = ''
 
     def read_data(self):
-        df = pd.read_csv('./data/202106_202106_연령별인구현황_월간.csv', encoding='UTF-8', thousands = ',', index_col = 0)
+        df = pd.read_csv('../titanic/data/202106_202106_연령별인구현황_월간.csv', encoding='UTF-8', thousands =',', index_col = 0)
         df.to_csv('./data/202106_202106_연령별인구현황_월간_without_comma.csv', sep=',', na_rep='NaN')
-        data = csv.reader(open('./data/202106_202106_연령별인구현황_월간_without_comma.csv', 'rt', encoding='UTF-8'))
+        data = csv.reader(open('../titanic/data/202106_202106_연령별인구현황_월간_without_comma.csv', 'rt', encoding='UTF-8'))
         next(data)
         self.data = list(data)
 
@@ -76,12 +103,15 @@ class Population(object):
         plt.legend()
         plt.show()
 
-
 if __name__ == '__main__':
     pop = Population()
     pop.read_data()
+    pop.show_plot(pop.pop_per_dong('역삼2동'))
+
+    pop2 = Population2()
+    pop2.read_data()
     # name = input('인구구조가 알고 싶은 지역의 이름(읍면동 단위)를 입력해 주세요')
-    pop.find_home('필동')
-    pop.home = pop.list_to_array(pop.home)
-    pop.find_similar_area('필동')
-    pop.show_plot_similar_two_cities('필동', pop.home, pop.away)
+    pop2.find_home('필동')
+    pop2.home = pop2.list_to_array(pop2.home)
+    pop2.find_similar_area('필동')
+    pop2.show_plot_similar_two_cities('필동', pop2.home, pop2.away)
