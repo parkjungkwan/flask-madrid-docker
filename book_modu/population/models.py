@@ -31,7 +31,7 @@ class Population(object):
 
 
 
-class Population2(object):
+class PopulationWithPandas(object):
 
     data: [] = list()
     home: [] = list()
