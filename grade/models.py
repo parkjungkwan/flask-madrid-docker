@@ -94,20 +94,9 @@ class Person(object):
     def to_string(self):
         print(f'이름{self.name},나이{self.age},사는곳{self.address}')
 
-def main():
-    persons = []
-    while 1:
-        menu = input('0-EXIT 1- Add 2- Print')
-        if menu == '0':
-            return
-        elif menu == '1':
-            persons.append(Person(input('name'),input('age'),input('address')))
-        elif menu == '2':
-            for i in persons:
-                i.to_string()
 
 
-if __name__ == '__main__':
-    main()
+
+
 
 
