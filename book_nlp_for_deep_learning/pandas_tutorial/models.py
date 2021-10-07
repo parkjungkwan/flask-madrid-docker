@@ -1,4 +1,3 @@
-import pandas
 import pandas as pd
 
 class OlympicMedals(object):
@@ -9,3 +8,6 @@ class OlympicMedals(object):
         print(df)
         return df
 
+if __name__ == '__main__':
+    o = OlympicMedals()
+    o.read_wiki()

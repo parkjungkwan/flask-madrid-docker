@@ -1,6 +1,6 @@
 import unittest
 
-from essential_packages.one_to_ten_sum import OneToTenSum
+from book_algorithm_interview.chap_02_program_language.models import OneToTenSum
 
 
 class OneToTenSumTest(unittest.TestCase):

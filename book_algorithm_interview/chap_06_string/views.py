@@ -1,4 +1,4 @@
-from book_algorithm_interview.string_tutorial.models import StringConversion
+from book_algorithm_interview.chap_06_string.models import StringConversion
 
 if __name__ == '__main__':
     stringConversion = StringConversion()

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import unittest
 import os
 
-from book_modu.template.basic_plot import BasicPlot
+from book_modu.basic_plot.models import BasicPlot
 
 
 class BasicPlotTest(object):
