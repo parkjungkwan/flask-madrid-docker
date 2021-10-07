@@ -33,7 +33,7 @@ if __name__ == '__main__':
             vo = titanic.drop_feature(vo, 'Name', 'Cabin', 'Sex', 'Age', 'Fare', 'SibSp', 'Parch', 'Ticket')
         elif menu == 3:
 
-            print(f'SKLearn Algorithm Accuracy is {titanic.accuracy_by_classfier(vo)}')
+
             print(f'\nThe Info of Train is {vo.train.info()},\nThe Info of Test is {vo.test.info()}')
             print('#'*100)
             print(f' Test PassengerId ::: {vo.test["PassengerId"][0]}\n ')
@@ -43,8 +43,12 @@ if __name__ == '__main__':
             print(f' Train Gender ::: {vo.train["Gender"][0]}, Train Embarked ::: {vo.test["Gender"][0]}\n')
             print(f' Train AgeGroup ::: {vo.train["AgeGroup"][0]}, Train Embarked ::: {vo.test["AgeGroup"][0]}\n')
             print(f' Train FareBand ::: {vo.train["FareBand"][0]}, Train Embarked :::  {vo.test["FareBand"][0]}\n')
-            print(f'Null Count of Train is {vo.train.isnull().sum()} '
-                  f'Null Count of Test is {vo.test.isnull().sum()}')
+            print('#' * 100)
+            print(f'Null Count of Train is \n {vo.train.isnull().sum()} '
+                  f'Null Count of Test is \n {vo.test.isnull().sum()}')
+            print('$' * 100)
+            print(f'SKLearn Algorithm Accuracy is {titanic.accuracy_by_classfier(vo)}')
+
             # clf = RandomForestClassifier()
             # clf.fit(vo.train, vo.test)
             # prediction = clf.predict(vo.test)
