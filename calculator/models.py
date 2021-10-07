@@ -51,7 +51,4 @@ class Calculator(object):
                 print('Wrong Selected Number')
                 break
 
-if __name__ == '__main__':
-
-    Calculator.main()
 

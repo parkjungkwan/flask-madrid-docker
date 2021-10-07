@@ -20,9 +20,3 @@ class OneToTenSum(object):
         val = sum(range(1, 11))
         return val
 
-
-if __name__ == '__main__':
-    a = OneToTenSum()
-    ic(a.one_to_ten_sum_1())
-    ic(a.one_to_ten_sum_2())
-    ic(a.one_to_ten_sum_3())
