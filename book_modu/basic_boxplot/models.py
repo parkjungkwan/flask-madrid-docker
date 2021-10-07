@@ -1,24 +1,29 @@
 import random
 
-from modu.template import ChangedTemperaturesOnMyBirthday
-from modu.template.basic_hist import highest_temperature
+
 import matplotlib.pyplot as plt
 
-class BasicBoxplot(object):
+from book_modu.changed_temperatures_on_my_birthday.models import ChangedTemperaturesOnMyBirthday
 
-    def show_boxplot(month: str):
-        arr = highest_temperature(month)
+
+class BasicBoxplot(object):
+    myBirthday = ChangedTemperaturesOnMyBirthday()
+
+    def show_boxplot(self, month: str):
+        myBirthday = self.myBirthday
+        arr = myBirthday.highest_temperature(month)
         plt.boxplot(arr)
         plt.show()
 
 
-    def sorted_random_arr() -> []:
+    def sorted_random_arr(self) -> []:
         arr = []
         [arr.append(random.randint(1, 1000)) for i in range(13)]
         return arr
 
 
-    def show_boxplot_all_month():
+    def show_boxplot_all_month(self):
+        myBirthday = self.myBirthday
         # arr = ChangedTemperaturesOnMyBirthday()
         # arr.read_data()
         # month_ls = []
@@ -28,7 +33,7 @@ class BasicBoxplot(object):
         # plt.boxplot(month_ls)
         # plt.show()
         arr = []
-        [arr.append(highest_temperature((str(i + 1)
+        [arr.append(myBirthday.highest_temperature((str(i + 1)
                                          if len(str(i+1)) == 2
                                             else str('0'+str(i + 1)))))
                                                 for i in range(12)]
@@ -36,7 +41,7 @@ class BasicBoxplot(object):
         plt.show()
 
 
-    def show_boxplot_per_date():
+    def show_boxplot_per_date(self):
         arr = ChangedTemperaturesOnMyBirthday()
         arr.read_data()
         date = []

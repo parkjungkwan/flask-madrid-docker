@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from common.menu import print_menu
 
 """
 list 값은 y축이고, x축은 0부터 자동으로 증가한다.

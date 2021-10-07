@@ -33,7 +33,7 @@ class ChangedTemperaturesOnMyBirthday(object):
         self.extract_date_data()
 
     def read_data(self) -> object:
-        data = csv.reader(open('data/seoul.csv', encoding='utf-8'))
+        data = csv.reader(open('./data/seoul.csv', encoding='utf-8'))
         next(data)
         self.data = data
         return data

@@ -10,7 +10,7 @@ class Population(object):
     data: [] = list()
 
     def read_data(self):
-        data = csv.reader(open('../titanic/data/202106_202106_연령별인구현황_월간.csv', 'rt', encoding='UTF-8'))
+        data = csv.reader(open('./data/202106_202106_연령별인구현황_월간.csv', 'rt', encoding='UTF-8'))
         next(data)
         # print([i for i in data])
         self.data = data
@@ -39,9 +39,9 @@ class PopulationWithPandas(object):
     result_name: str = ''
 
     def read_data(self):
-        df = pd.read_csv('../titanic/data/202106_202106_연령별인구현황_월간.csv', encoding='UTF-8', thousands =',', index_col = 0)
+        df = pd.read_csv('./data/202106_202106_연령별인구현황_월간.csv', encoding='UTF-8', thousands =',', index_col = 0)
         df.to_csv('./data/202106_202106_연령별인구현황_월간_without_comma.csv', sep=',', na_rep='NaN')
-        data = csv.reader(open('../titanic/data/202106_202106_연령별인구현황_월간_without_comma.csv', 'rt', encoding='UTF-8'))
+        data = csv.reader(open('./data/202106_202106_연령별인구현황_월간_without_comma.csv', 'rt', encoding='UTF-8'))
         next(data)
         self.data = list(data)
 

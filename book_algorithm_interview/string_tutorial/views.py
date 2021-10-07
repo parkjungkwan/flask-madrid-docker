@@ -1,6 +1,7 @@
-from book_algorithm_interview.string_tutorial.models import str_to_list, reverse_list, list_to_str
+from book_algorithm_interview.string_tutorial.models import StringConversion
 
 if __name__ == '__main__':
-    ls = str_to_list(input("Input"))
-    resversed_ls = reverse_list(ls)
-    print(list_to_str(resversed_ls))
+    stringConversion = StringConversion()
+    ls = stringConversion.str_to_list(input("Input"))
+    resversed_ls = stringConversion.reverse_list(ls)
+    print(stringConversion.list_to_str(resversed_ls))

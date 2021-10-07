@@ -8,11 +8,11 @@ class Palindrome(object):
         return {"RESULT": False for i in ls if ls.pop(0) != ls.pop()}
 
 class StringConversion(object):
-    def str_to_list(payload: str) -> []:
+    def str_to_list(self, payload: str) -> []:
         return []
 
-    def reverse_list(ls: []) -> []:
+    def reverse_list(self, ls: []) -> []:
         return []
 
-    def list_to_str(ls: []) -> str:
+    def list_to_str(self, ls: []) -> str:
         return ''
