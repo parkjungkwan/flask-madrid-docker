@@ -76,26 +76,28 @@ class Titanic(object):
         plt.show()
 
 
+    def embarked_nominal(self, vo) -> object:
+        train = vo.train
+        test = vo.test
+        train = train.fillna({'Embarked':'S'})
+        test = test.fillna({'Embarked': 'S'})
+        train['Embarked'] = train['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
+        test['Embarked'] = test['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
+        return vo
 
-
-    def embarked_nominal(self, this) -> object:
-        this.train = this.train.fillna({'Embarked':'S'})
-        this.test = this.test.fillna({'Embarked': 'S'})
-        this.train['Embarked'] = this.train['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
-        this.test['Embarked'] = this.test['Embarked'].map({'S': 1, 'C': 2, 'Q': 3})
-        return this
-
-    def fare_ordinal(self, this) -> object:
-        this.train['Fare'] = this.train['Fare'].fillna(1)
-        this.test['Fare'] = this.test['Fare'].fillna(1)
-        this.train['FareBand'] = pd.qcut(this.train['Fare'], 4, labels={1, 2, 3, 4})
-        this.test['FareBand'] = pd.qcut(this.test['Fare'], 4, labels={1, 2, 3, 4})
+    def fare_ordinal(self, vo) -> object:
+        train = vo.train
+        test = vo.test
+        train['Fare'] = train['Fare'].fillna(1)
+        test['Fare'] = test['Fare'].fillna(1)
+        train['FareBand'] = pd.qcut(train['Fare'], 4, labels={1, 2, 3, 4})
+        test['FareBand'] = pd.qcut(test['Fare'], 4, labels={1, 2, 3, 4})
         # qcut() 을 사용하면 자동으로 구간을 4등분한다.
         # 타이타닉에서는 bins = [-1, 8, 15, 31, np.inf] 로 구분된다.
-        return this
+        return vo
 
-    def title_nominal(self, this) -> object:
-        combine = [this.train, this.test]
+    def title_nominal(self, vo) -> object:
+        combine = [vo.train, vo.test]
         title_mapping = {'Mr': 1, 'Miss': 2, 'Mrs': 3, 'Master': 4, 'Royal': 5, 'Rare': 6}
         for dataset in combine:
             dataset['Title'] = dataset.Name.str.extract('([A-Za-z]+)\.', expand=False)
@@ -107,18 +109,18 @@ class Titanic(object):
             dataset['Title'] = dataset['Title'].replace('Ms', 'Miss')
             dataset['Title'] = dataset['Title'].fillna(0)
             dataset['Title'] = dataset['Title'].map(title_mapping)
-        return this
+        return vo
 
-    def gender_nominal(self, this) -> object:
-        combine = [this.train, this.test]
+    def gender_nominal(self, vo) -> object:
+        combine = [vo.train, vo.test]
         sex_mapping = {'male':0, 'female':1}
         for dataset in combine:
             dataset['Gender'] = dataset['Sex'].map(sex_mapping)
-        return this
+        return vo
 
-    def age_ordinal(self, this) -> object:
-        train = this.train
-        test = this.test
+    def age_ordinal(self, vo) -> object:
+        train = vo.train
+        test = vo.test
         train['Age'] = train['Age'].fillna(-0.5)
         test['Age'] = test['Age'].fillna(-0.5)
         bins = [-1, 0, 5, 12, 18, 24, 35, 60, np.inf]
@@ -128,17 +130,17 @@ class Titanic(object):
         for i in train, test:
             i['AgeGroup'] = pd.cut(i['Age'], bins=bins, labels=labels)
             i['AgeGroup'] = i['AgeGroup'].map(age_mapping)
-        return this
+        return vo
 
 
     def create_k_fold(self) -> object:
         return KFold(n_splits=10, shuffle=True, random_state=0)
 
 
-    def accuracy_by_classfier(self, this):
+    def accuracy_by_classfier(self, vo):
         score = cross_val_score(RandomForestClassifier(),
-                                this.train,
-                                this.label,
+                                vo.train,
+                                vo.label,
                                 cv=self.create_k_fold(),
                                 n_jobs=1,
                                 scoring='accuracy')
