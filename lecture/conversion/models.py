@@ -41,7 +41,9 @@ class Conversion(object):
         ic(type(lst))
         ic(lst)
         print('Q10. 구구단 한 줄 출력 2*1=2, 2*2=4, ..., 9*9=81')
-
+        gugudan = self.gugudan(self.create_tuple())
+        ic(type(gugudan))
+        ic(gugudan)
         print('Q11. 1번 튜플에서 3의 배수만 문자열로 갖는 리스트 출력')
         lst = self.three_multi_change_str(self.create_tuple())
         ic(type(lst))
@@ -62,20 +64,25 @@ class Conversion(object):
     # Q5. int 리스트를 딕셔너리로 전환. 단 키값은 int 를 str 로 변환시켜서 활용함.
     def list_to_dictionary(self, lst) -> {}:
         return {str(i): i for i in lst}
-
+    # Q6. "hello"를 가진 튜플생성
     def hello_to_tuple(self,param:str) -> ():
         return tuple(param)
-
+    # Q7. 6번 튜플을 리스트로 전환
     def hello_to_list(self, tpl ) -> []:
         return list(tpl)
-
+    # Q8. 5번 딕셔너리를 dataframe 으로 전환, orient 속성값으로 인덱스 지정
     def dictionary_to_dataframe(self, dt) -> object:
         return pd.DataFrame().from_dict(dt, orient='index')
-
-
+    # Q9. 1번 튜플의 제곱을 요소로 갖는 리스트 출력
+    def my_pow(self, x):
+        return pow(x, 2)
     def tuple_square(self, tpl) -> []:
         # return [ i**2 for i in tpl]
+        # return list(map(self.my_pow, tpl)) 파라미터 1개는 생략가능
         return list(map(lambda x: pow(x, 2), tpl))
+    # Q10. 구구단 한 줄 출력 2*1=2, 2*2=4, ..., 9*9=81
+    def gugudan(self, tpl) -> []:
+        pass
     # Q11. 1번 튜플에서 3의 배수만 문자열로 갖는 리스트 출력
     def three_multi_change_str(self, tpl) -> []:
         return list(map(lambda x: str(x) if x % 3 == 0 else x, tpl ))
