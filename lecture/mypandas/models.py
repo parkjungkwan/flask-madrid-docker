@@ -31,9 +31,9 @@ class MyPandas(object):
                  1  1  3  5
                  2  2  4  6
         '''
+        print('Q1. 다음 결과 출력')
         df1 = pd.DataFrame.from_dict({"1":[1,3,5],"2":[2,4,6]}, orient='index', columns=['a','b','c'])
         df1_1 = pd.DataFrame({"a": [1, 2], "b": [3, 4], "c": [5, 6]}, index=[1,2])
-        ic(f'Q1 {"#"*20}')
         ic(df1)
         ic(df1_1)
         '''         
@@ -50,13 +50,14 @@ class MyPandas(object):
                  3   7   8   9
                  4  10  11  12
         '''
+        print('Q2. 다음 결과 출력')
         df2 = pd.DataFrame({'A':range(1,11,3),'B':range(2,12,3),'C':range(3,13,3)},
                            index=range(1,5))
         df2_2 = pd.DataFrame([[1,2,3],
                               [4,5,6],
                               [7,8,9],
                               [10,11,12]],index=range(1,5),columns=['A','B','C'])
-        ic(f'Q2 {"#" * 20}')
+
         ic(df2)
 
         ''' 
@@ -66,11 +67,9 @@ class MyPandas(object):
                  1  44  24  97
 
         '''
+        print('Q3 두자리 정수를 랜덤으로 2행 3열 데이터프레임을 생성')
         df3 = pd.DataFrame(np.random.randint(10, 100, size=(2,3)))
-        ic(f'Q3 {"#" * 20}')
         ic(df3)
-
-
         ''' 
         
         Q4 국어, 영어, 수학, 사회 4과목을 시험치른 10명의 학생들의 성적표 작성. 단 점수 0 ~ 100이고 학생은 랜덤 알파벳 5자리 ID 로 표기
@@ -90,7 +89,6 @@ class MyPandas(object):
                GOJKU  62  17  75  49
         
         '''
-        ic(f'Q4 {"#" * 20}')
         # ic(self.score())
         # ic(self.id())
         '''
@@ -99,6 +97,7 @@ class MyPandas(object):
         def score(self):
         return np.random.randint(0, 100, (10, 4))
         '''
+        print('Q4 국어, 영어, 수학, 사회 4과목을 시험치른 10명의 학생들의 성적표 작성. 단 점수 0 ~ 100이고 학생은 랜덤 알파벳 5자리 ID 로 표기')
         # score = [list() for i in range(1, 11)]
         score = [list(map(lambda x: np.random.randint(0,101), range(1,5))) for i in range(1,11)]
         # score = [[np.random.randint(0,101) for i in range(4)] for i in range(10)]
@@ -123,7 +122,7 @@ class MyPandas(object):
                  GQzmY  59  37  80  27
 
         '''
-        # print('#' * 150)
+        print('Q5 4번 문제를 loc 를 통해 동일하게 작성')
         df_by_hs = pd.DataFrame()
         name_list = []
         df_by_hs['국어'] = 0
@@ -376,7 +375,10 @@ class MyPandas(object):
                                                            i    dog  7.0
         '''
         print('Q6-4 객체의 3, 4, 8번 행에 해당하는 animal과 age 값만 출력')
-        ic(df6.loc[df6.index[3,4,8]], ['animal', 'age'])
+        ic(df6.loc[df6.index[[3,4,8]], ['animal', 'age']])
+        # index[[3,4,8]] index[] 이 인덱서 기능을 함
+
+
         ''' 
         6-5 visit 컬럼에서 3 초과하는 값 출력
 
@@ -386,7 +388,7 @@ class MyPandas(object):
                                   f    cat  2.0       3       no
         '''
         print('Q6-5 visit 컬럼에서 3 초과하는 값 출력')
-        ic(df6[[df6['visits']>2]])
+        ic(df6[df6['visits']>2])
         ''' 
         6-6 age 에서 NaN 값 출력
         ic| df6[df6['age'].isnull()]:   animal  age  visits priority
@@ -394,7 +396,7 @@ class MyPandas(object):
                                       h    cat  NaN       1      yes
         '''
         print('Q6-6 age 에서 NaN 값 출력')
-        ic(df6[df6['age']].isnull())
+        ic(df6[df6['age'].isnull()])
 
         '''         
         6-7 age가 3살 미만 고양이값 출력
