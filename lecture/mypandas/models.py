@@ -201,12 +201,12 @@ class MyPandas(object):
         print('Q5-1 국어 점수만 출력')
         ic(df5.loc[:,'국어'])
         ''' 
-        Q5-2 1등 점수만 출력
+        Q5-2 hVoGW 점수만 출력
 
         ic| hVoGW	15	42	59	67
         
         '''
-        print('Q5-2 1등 점수만 출력')
+        print('Q5-2 hVoGW 점수만 출력')
         ic(df5.iloc[[0],:])
 
         ''' 
@@ -290,7 +290,9 @@ class MyPandas(object):
                  AOQFG  32  50  95   1  52  230
                  jHChe  59  37  80  27  39  242
         '''
-        print()
+        print('Q5-7 방금 추가한 과목총점 삭제')
+        df5.drop('과목총점', inplace=True)
+        ic(df5)
         '''                         
         Q5-8 총점 열 기준 내림차순 정렬
                  wuxIm  58  94  93  54  83  382
@@ -304,7 +306,9 @@ class MyPandas(object):
                  PAwgj  85  24  16   8  22  155
                  QkpKK  25  54  29  10   8  126
         '''
-
+        print('Q5-8 총점 열 기준 내림차순 정렬')
+        df5.sort_values(by=['총점'], ascending=False, inplace=True)
+        ic(df5)
         '''  
         Q6 주어진 값으로 DataFrame 객체 생성
         6-1 객체내부 정보를 출력
