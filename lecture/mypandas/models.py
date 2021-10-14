@@ -7,6 +7,13 @@ from icecream import ic
 
 class MyPandas(object):
 
+    def q5_copy_random_score(self, df: object) -> object:
+        idx = list(df.index)
+        result = pd.DataFrame(columns=df.columns, index=list(df.index))
+        for i in range(len(idx)):
+            result.loc[idx[i]] = df.loc[idx[i]]
+        return result
+
     def id(self):
         return "".join(random.choice(string.ascii_letters) for i in range(5))
     def score(self):
@@ -116,31 +123,61 @@ class MyPandas(object):
                  GQzmY  59  37  80  27
 
         '''
-        df = pd.DataFrame()
+        # print('#' * 150)
+        df_by_hs = pd.DataFrame()
         name_list = []
-        df['국어'] = 0
-        df['영어'] = 0
-        df['수학'] = 0
-        df['사회'] = 0
-        df['과학'] = 0
+        df_by_hs['국어'] = 0
+        df_by_hs['영어'] = 0
+        df_by_hs['수학'] = 0
+        df_by_hs['사회'] = 0
+        df_by_hs['과학'] = 0
 
-        df.loc['ckSVA'] = [93, 44, 14, 94]
-        df.loc['CAOot'] = [25, 54, 29, 10]
-        df.loc['fZTCh'] = [82, 65, 31, 31]
-        df.loc['mqZJJ'] = [51, 56, 56, 3]
-        df.loc['BKlLt'] = [34, 32, 67, 48]
-        df.loc['KKYUN'] = [85, 24, 16, 8]
-        df.loc['WAjFK'] = [28, 80, 52, 43]
-        df.loc['yBVgG'] = [25, 94, 93, 54]
-        df.loc['lGmwZ'] = [32, 50, 95, 1]
-        df.loc['GQzmY'] = [26, 37, 80, 27]
+        df_by_hs.loc['ckSVA'] = [93, 44, 14, 94, 94]
+        df_by_hs.loc['CAOot'] = [25, 54, 29, 10, 94]
+        df_by_hs.loc['fZTCh'] = [82, 65, 31, 31, 94]
+        df_by_hs.loc['mqZJJ'] = [51, 56, 56, 3, 94]
+        df_by_hs.loc['BKlLt'] = [34, 32, 67, 48, 94]
+        df_by_hs.loc['KKYUN'] = [85, 24, 16, 8, 94]
+        df_by_hs.loc['WAjFK'] = [28, 80, 52, 43, 94]
+        df_by_hs.loc['yBVgG'] = [25, 94, 93, 54, 94]
+        df_by_hs.loc['lGmwZ'] = [32, 50, 95, 1, 94]
+        df_by_hs.loc['GQzmY'] = [26, 37, 80, 27, 94]
+        # ic(df_by_hs)
 
-        # 국어점수만출력
-        print('#' * 150)
-        print(df.loc['ckSVA':'GQzmY', '국어'])
-        print(df.loc['lGmwZ'])
+        # print('국어점수만출력')
+        # print(df_by_hs.loc['lGmwZ'])
+        # print(df_by_hs.loc['ckSVA':'GQzmY', '국어'])
+        # print(df_by_hs.loc['lGmwZ'])
+        # 기존 df 의 복사본 만들기
+        # df_by_jh = self.q5_copy_random_score(df_by_hs)
 
-        print('#' * 150)
+        df_by_other_method = pd.DataFrame({
+            '국어': self.score(),
+            '영어': self.score(),
+            '수학': self.score(),
+            '사회': self.score()
+        }, index=[self.id()])
+
+        for i in range(1, 10):
+            df_by_other_method.loc[self.id()] = {
+            '국어': self.score(),
+            '영어': self.score(),
+            '수학': self.score(),
+            '사회': self.score()
+        }
+
+        ic(df_by_other_method)
+
+        9
+
+
+
+
+        
+
+
+
+
 
         ''' 
         Q5-1 국어 점수만 출력
