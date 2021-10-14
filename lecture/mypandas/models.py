@@ -333,7 +333,14 @@ class MyPandas(object):
                             75%    4.625000   2.750000
                             max    7.000000   3.000000
         '''
-
+        print('Q6-1 주어진 값으로 DataFrame 객체 생성 후 객체내부 정보를 출력')
+        data = {'animal': ['cat', 'cat', 'snake', 'dog', 'dog', 'cat', 'snake', 'cat', 'dog', 'dog'],
+                'age': [2.5, 3, 0.5, np.nan, 5, 2, 4.5, np.nan, 7, 3],
+                'visits': [1, 3, 2, 3, 2, 3, 1, 1, 2, 1],
+                'priority': ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'yes', 'no', 'no']}
+        labels = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+        df6 = pd.DataFrame(data, index=labels)
+        ic(df6)
         '''  
         6-2 객체 상위 3열까지 출력
 
@@ -342,7 +349,8 @@ class MyPandas(object):
                           b    cat  3.0       3      yes
                           c  snake  0.5       2       no
         '''
-
+        print('Q6-2 객체 상위 3열까지 출력')
+        ic(df6[:3])
         '''  
         6-3 animal과 age 컬럼만 출력
         ic| df6.loc[:, ['animal', 'age']]:   animal  age
@@ -358,8 +366,8 @@ class MyPandas(object):
                                            j    dog  3.0
                                            
         '''
-
-
+        print('Q6-3 animal과 age 컬럼만 출력')
+        ic(df6.loc[:,['animal','age']])
         '''                                                            
         6-4 객체의 3, 4, 8번 행에 해당하는 animal과 age 값만 출력
         ic| df6.loc[df6.index[[3,4,8]], ['animal','age']]:   animal  age
@@ -367,8 +375,8 @@ class MyPandas(object):
                                                            e    dog  5.0
                                                            i    dog  7.0
         '''
-
-
+        print('Q6-4 객체의 3, 4, 8번 행에 해당하는 animal과 age 값만 출력')
+        ic(df6.loc[df6.index[3,4,8]], ['animal', 'age'])
         ''' 
         6-5 visit 컬럼에서 3 초과하는 값 출력
 
@@ -377,15 +385,16 @@ class MyPandas(object):
                                   d    dog  NaN       3      yes
                                   f    cat  2.0       3       no
         '''
-
-
+        print('Q6-5 visit 컬럼에서 3 초과하는 값 출력')
+        ic(df6[[df6['visits']>2]])
         ''' 
         6-6 age 에서 NaN 값 출력
         ic| df6[df6['age'].isnull()]:   animal  age  visits priority
                                       d    dog  NaN       3      yes
                                       h    cat  NaN       1      yes
         '''
-
+        print('Q6-6 age 에서 NaN 값 출력')
+        ic(df6[df6['age']].isnull())
 
         '''         
         6-7 age가 3살 미만 고양이값 출력
@@ -393,7 +402,8 @@ class MyPandas(object):
                                                             a    cat  2.5       1      yes
                                                             f    cat  2.0       3       no
         '''
-
+        print('6-7 age가 3살 미만 고양이값 출력')
+        ic(df6[(df6['age'] < 3) & (df6['animal'] == 'cat')])
 
         '''        
         6-8 age가 2살이상 4살 미만인 값 출력
@@ -403,8 +413,8 @@ class MyPandas(object):
                                           f    cat  2.0       3       no
                                           j    dog  3.0       1       no
         '''
-
-
+        print('6-8 age가 2살이상 4살 미만인 값 출력')
+        ic(df6[df6['age'].between(2,4)])
         '''                    
         6-9 f 행의 나이를 1.5살로 변경
                  a    cat  2.5       1      yes
@@ -418,13 +428,15 @@ class MyPandas(object):
                  i    dog  7.0       2       no
                  j    dog  3.0       1       no
         '''
-
-
+        print('Q6-9 f 행의 나이를 1.5살로 변경')
+        df6.loc['f','age'] = 1.5
+        ic(df6)
         ''' 
         6-10 객체에서 visit 의 합 출력
         ic| df6['visits'].sum(): 19
         '''
-
+        print('Q6-10 객체에서 visit 의 합 출력')
+        ic(df6['visits'].sum())
 
         ''' 
         6-11 동물별로 나이의 평균 출력
@@ -434,7 +446,8 @@ class MyPandas(object):
                                                  snake    2.500000
                                                  Name: age, dtype: float64
         '''
-
+        print('Q6-11 동물별로 나이의 평균 출력')
+        ic(df6.groupby('animal')['age'].mean())
 
         '''        
         6-12 k행을 추가하여 dog , 5.5세, 방문회수 2회, 우선권없음(no) 열을 추가
@@ -450,8 +463,8 @@ class MyPandas(object):
                  j    dog  3.0       1       no
                  k    dog  5.5       2       no
         '''
-
-
+        print('Q6-12 k행을 추가하여 dog , 5.5세, 방문회수 2회, 우선권없음(no) 열을 추가')
+        df6.loc['k'] = ['dog', 5.5,2,'no']
         '''         
         6-13 방금 추가한 열 삭제
         ic| df6:   animal  age  visits priority
@@ -466,8 +479,9 @@ class MyPandas(object):
                  i    dog  7.0       2       no
                  j    dog  3.0       1       no
         '''
-
-
+        print('Q6-13 방금 추가한 열 삭제')
+        df6.drop('k', inplace=True) # del df['k'] 도 같음
+        ic(df6)
         '''  
         6-14 객체에 있는 동물의 종류의 수 출력
         ic| df6['animal'].value_counts(): dog      4
