@@ -489,7 +489,9 @@ class MyPandas(object):
                                           snake    2
                                           Name: animal, dtype: int64
         '''
-
+        print('Q6-14 객체에 있는 동물의 종류의 수 출력')
+        animal_counts = df6['animal'].value_counts()
+        ic(animal_counts)
 
         '''                
         6-15 age 는 내림차순, visits 는 오름차순으로 정렬
@@ -506,8 +508,8 @@ class MyPandas(object):
                                                                            h    cat  NaN       1      yes
                                                                            d    dog  NaN       3      yes
         '''
-
-
+        print('Q6-15 age 는 내림차순, visits 는 오름차순으로 정렬')
+        ic(df6.sort_values(by=['age','visits'], ascending=[False, True]))
         '''  
         6-16 priority 의 yes를 True, no 를 False  로 맵핑 후 출력
 
@@ -523,8 +525,9 @@ class MyPandas(object):
                  i    dog  7.0       2     False
                  j    dog  3.0       1     False
         '''
-
-
+        print('Q6-16 priority 의 yes를 True, no 를 False  로 맵핑 후 출력')
+        df6['priority'] = df6['priority'].map({'yes': True, 'no': False})
+        ic(df6)
         '''                
         6-17 snake 를 python 으로 값을 변경
         ic| df6:    animal  age  visits  priority
@@ -539,7 +542,9 @@ class MyPandas(object):
                  i     dog  7.0       2     False
                  j     dog  3.0       1     False
         '''
-
+        print('Q6-17 snake 를 python 으로 값을 변경')
+        df6['animal'] = df6['animal'].replace('snake', 'python')
+        ic(df6)
 
         '''                  
         6-18 각각의 동물 유형과 방문 횟수에 대해, 평균나이 출력,
@@ -551,7 +556,8 @@ class MyPandas(object):
                  dog     3.0  6.0  NaN
                  python  4.5  0.5  NaN
         '''
-
+        df6 = df6.pivot_table(index='animal', columns='visits', values='age', aggfunc='mean')
+        ic(df6)
 
         '''    
         Q7. 키값 A와 중복된 값이 제거된 1,2,3,4,5,6,7 이 출력
@@ -566,7 +572,11 @@ class MyPandas(object):
                    8  6
                    9  7
         '''
-
+        print('Q7. 키값 A와 중복된 값이 제거된 1,2,3,4,5,6,7 이 출력')
+        df7 = pd.DataFrame({'A': [1, 2, 2, 3, 4, 5,6, 7, 7]})
+        df7 = df7.drop_duplicates()
+        ic(type(df7['A']))
+        ic(df7)
 
         '''    
         Q8. 행의 각 요소에서 행의 평균을 뺀 값을 출력하되 부분집합으로 가로출력
@@ -577,14 +587,18 @@ class MyPandas(object):
                  3  0.340665  0.224261 -0.564927
                  4  0.059283  0.010734 -0.070017
         '''
-
+        print('Q8. 행의 각 요소에서 행의 평균을 뺀 값을 출력하되 부분집합으로 가로출력')
+        df8 = pd.DataFrame(np.random.random(size=(5,3)))
+        df8 = df8.sub(df8.mean(axis=1), axis = 0)
+        ic(df8)
 
         '''                
         Q9. 가장 작은 합계를 가진 숫자열의 열을 출력(최대값은 max)
         ic| df9.sum().idxmax(): 'b'
         '''
-
-
+        print('Q9. 가장 작은 합계를 가진 숫자열의 열을 출력(최대값은 max)')
+        df9 = pd.DataFrame(np.random.random(size=(5,10)), columns=list('abcdefghij'))
+        ic(df9.sum().idxmax())
         '''    
         Q10. 중복된 값이 없는 유니크한 열의 카운트 출력(중복되지 않은 행은 몇 개..)
         ic| df10:    0  1  2
@@ -607,8 +621,11 @@ class MyPandas(object):
                   7  0  0  1
                   8  0  1  0
         '''
-
-
+        print('Q10. 중복된 값이 없는 유니크한 열의 카운트 출력(중복되지 않은 행은 몇 개..)')
+        df10 = pd.DataFrame(np.random.randint(0, 2, size=(10, 3)))
+        ic(df10)
+        ic(len(df10) - df10.duplicated(keep=False).sum())
+        ic(df10.drop_duplicates(keep=False))
         '''  
         Q11. 체의 각 행에 대해 세번째 NaN 값이 들어 있는 열을 찾으시오. 일련의 열 레이블을 반환해야 합니다.
         nan = np.nan
@@ -626,7 +643,18 @@ class MyPandas(object):
                    4    d
                   dtype: object
         '''
-
+        print('Q11. 체의 각 행에 대해 세번째 NaN 값이 들어 있는 열을 찾으시오. 일련의 열 레이블을 반환해야 합니다.')
+        nan = np.nan
+        data = [[0.04, nan, nan, 0.25, nan, 0.43, 0.71, 0.51, nan, nan],
+                [nan, nan, nan, 0.04, 0.76, nan, nan, 0.67, 0.76, 0.16],
+                [nan, nan, 0.5, nan, 0.31, 0.4, nan, nan, 0.24, 0.01],
+                [0.49, nan, nan, 0.62, 0.73, 0.26, 0.85, nan, nan, nan],
+                [nan, nan, 0.41, nan, 0.05, nan, 0.61, nan, 0.48, 0.68]]
+        columns = list('abcdefghij')
+        df11 = pd.DataFrame(data, columns=columns)
+        ic(type(df11.isnull()))
+        df11 = (df11.isnull().cumsum(axis=1)==3).idxmax(axis=1)
+        ic(df11)
 
         '''  
         Q12. grps 에서 a, b, c 별로 가장 큰 값
@@ -640,20 +668,32 @@ class MyPandas(object):
                   c    235
                   Name: vals, dtype: int64
         '''
-
-
+        print('Q12. grps 에서 a, b, c 별로 가장 큰 값')
+        df12 = pd.DataFrame({'grps': list('aaabbcaabcccbbc'),
+                             'vals': [12, 345, 3, 1, 45, 14, 4, 52, 54, 23, 235, 21, 57, 3, 87]})
+        ic(type(df12.groupby('grps')))
+        ic(type(df12.groupby('grps')['vals']))
+        df12 = df12.groupby('grps')['vals'].max()
+        ic(df12)
         '''  
         Q13. 다음 DF13 객체를 list 로 변환
         df13 = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
         ic| type(ls): <class 'list'>
         ic| df13.values.tolist(): [[1, 4], [2, 5], [3, 6]]
         '''
-
+        print('Q13. 다음 DF13 객체를 list 로 변환')
+        df13 = pd.DataFrame({'A':[1,2,3], 'B':[4,5,6]})
+        ls = df13.values.tolist()
+        ic(type(ls))
+        ic(df13.values.tolist())
 
         '''  
         Q14. 아래 결과로 출력되는 DF 객체 전환 코드작성
         ic| df14.to_dict(): {'A': {0: 1, 1: 2, 2: 3}, 'B': {0: 4, 1: 5, 2: 6}}
         '''
+        print('Q14. 아래 결과로 출력되는 DF 객체 전환 코드작성')
+        df14 = pd.DataFrame({'A':[1,2,3], 'B':[4,5,6]})
+        ic(df14.to_dict())
 
 
 if __name__ == '__main__':
