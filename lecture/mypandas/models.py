@@ -183,18 +183,6 @@ class MyPandas(object):
                 dict(zip(subjects, list(map(lambda x:np.random.randint(0, 101), range(5)))))
         ic(df5)
 
-
-
-
-
-
-
-        
-
-
-
-
-
         ''' 
         Q5-1 국어 점수만 출력
 
@@ -209,16 +197,17 @@ class MyPandas(object):
                              AOQFG    32
                              jHChe    59
                              Name: 국어, dtype: int64
-
         '''
-
+        print('Q5-1 국어 점수만 출력')
+        ic(df5.loc[:,'국어'])
         ''' 
-        Q5-2 TdQOI 점수만 출력
+        Q5-2 1등 점수만 출력
 
-        ic| TdQOI	15	42	59	67
-
+        ic| hVoGW	15	42	59	67
         
         '''
+        print('Q5-2 1등 점수만 출력')
+        ic(df5.iloc[[0],:])
 
         ''' 
         Q5-3 기존 학생들에게 과학과목과 점수를 랜덤으로 추가
@@ -236,7 +225,12 @@ class MyPandas(object):
                  jHChe  59  37  80  27  39
 
         '''
+        print('Q5-3 기존 학생들에게 과학과목과 점수를 랜덤으로 추가')
+        df5.loc[:,'과학'] = pd.Series([np.random.randint(0, 101) for i in range(1, 11)],
+                                    index=df5.index)
+        # df5.loc[:, '과학'] = [random.randint(1, 100) for i in range(len(list(df5.index)))]
 
+        ic(df5)
         ''' 
         
         Q5-4 각 학생들의 점수의 총점을 표현하는 컬럼을 추가
@@ -253,13 +247,17 @@ class MyPandas(object):
                  jHChe  59  37  80  27  39  242
 
         '''
-
+        print('Q5-4 각 학생들의 점수의 총점을 표현하는 컬럼을 추가')
+        df5['총점'] = df5.sum(axis=1)
+        ic(df5)
         ''' 
         Q5-5 각 학생들의 점수의 총합을 리스트로 출력
             ic| ls: [547, 536, 533, 319, 376, 2311]
 
         '''
-
+        print('Q5-5 각 학생들의 점수의 총합을 리스트로 출력')
+        ls5 = df5.sum().tolist()
+        ic(ls5)
         ''' 
         Q5-6 각 학생들의 점수의 총합과 마지막 행은 과목총점 추가해서 출력
         ic| df5:  국어   영어   수학   사회   과학    총점
@@ -275,7 +273,9 @@ class MyPandas(object):
                  jHChe   59   37   80   27   39   242
                  과목총점   547  536  533  319  376  2311
         '''
-
+        print('Q5-6 각 학생들의 점수의 총합과 마지막 행은 과목총점 추가해서 출력')
+        df5.loc['과목총점'] = ls5
+        ic(df5)
         ''' 
         Q5-7 방금 추가한 과목총점 삭제
         ic| df5:  국어  영어  수학  사회  과학   총점
@@ -290,7 +290,7 @@ class MyPandas(object):
                  AOQFG  32  50  95   1  52  230
                  jHChe  59  37  80  27  39  242
         '''
-
+        print()
         '''                         
         Q5-8 총점 열 기준 내림차순 정렬
                  wuxIm  58  94  93  54  83  382
