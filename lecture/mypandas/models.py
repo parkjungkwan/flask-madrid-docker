@@ -7,6 +7,11 @@ from icecream import ic
 
 class MyPandas(object):
 
+    def id(self):
+        return "".join(random.choice(string.ascii_letters) for i in range(5))
+    def score(self):
+        return np.random.randint(0, 100)
+
     def __init__(self):
         print('### PANDAS QUIZ ###')
         '''
@@ -88,7 +93,8 @@ class MyPandas(object):
         return np.random.randint(0, 100, (10, 4))
         '''
         # score = [list() for i in range(1, 11)]
-        score = [list(map(lambda x: np.random.randint(0,101), [i for i in range(1,5)])) for i in range(1,11)]
+        score = [list(map(lambda x: np.random.randint(0,101), range(1,5))) for i in range(1,11)]
+        # score = [[np.random.randint(0,101) for i in range(4)] for i in range(10)]
         students = ["".join([random.choice(string.ascii_letters) for i in range(5)]) for i in range(10)]
         ic(students)
         subjects = ['국어', '영어', '수학', '사회']
@@ -110,6 +116,31 @@ class MyPandas(object):
                  GQzmY  59  37  80  27
 
         '''
+        df = pd.DataFrame()
+        name_list = []
+        df['국어'] = 0
+        df['영어'] = 0
+        df['수학'] = 0
+        df['사회'] = 0
+        df['과학'] = 0
+
+        df.loc['ckSVA'] = [93, 44, 14, 94]
+        df.loc['CAOot'] = [25, 54, 29, 10]
+        df.loc['fZTCh'] = [82, 65, 31, 31]
+        df.loc['mqZJJ'] = [51, 56, 56, 3]
+        df.loc['BKlLt'] = [34, 32, 67, 48]
+        df.loc['KKYUN'] = [85, 24, 16, 8]
+        df.loc['WAjFK'] = [28, 80, 52, 43]
+        df.loc['yBVgG'] = [25, 94, 93, 54]
+        df.loc['lGmwZ'] = [32, 50, 95, 1]
+        df.loc['GQzmY'] = [26, 37, 80, 27]
+
+        # 국어점수만출력
+        print('#' * 150)
+        print(df.loc['ckSVA':'GQzmY', '국어'])
+        print(df.loc['lGmwZ'])
+
+        print('#' * 150)
 
         ''' 
         Q5-1 국어 점수만 출력
