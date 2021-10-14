@@ -168,7 +168,23 @@ class MyPandas(object):
 
         ic(df_by_other_method)
 
-        9
+        subjects = ['국어','영어','수학','사회']
+        scores = [np.random.randint(0, 101) for i in range(5)]
+        dt = dict(zip(subjects, scores))
+        df5  = pd.DataFrame(dt,
+                            index=["".join(random.choice(string.ascii_letters)
+                                           for i in range(5))])
+        '''
+        for i in range(1, 10):
+            df5.loc["".join(random.choice(string.ascii_letters) for i in range(5))] = \
+                dict(zip(subjects, [np.random.randint(0, 101) for i in range(5)]))'''
+        for i in range(1, 10):
+            df5.loc["".join(random.choice(string.ascii_letters) for i in range(5))] = \
+                dict(zip(subjects, list(map(lambda x:np.random.randint(0, 101), range(5)))))
+        ic(df5)
+
+
+
 
 
 
